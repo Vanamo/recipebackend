@@ -1,0 +1,12 @@
+POST http://localhost:3001/api/recipes
+content-type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZzZXBwYW5lIiwiaWQiOiI1YWE3YzZlZTk0MzE0NTA3ZDVjM2NlZDgiLCJpYXQiOjE1MjA5NDUzNzB9.zIo4z5IaLCxkRrKw36AIG9su6RnPtCh2MVjKtWmxXIY
+
+{
+  "title": "testiresepti",
+  "ingredients": "testiaineksia",
+  "instructions": "testaa mikä toimii",
+  "tags": "testitagi",
+  "likes": null,
+  "user": "5aa7c6ee94314507d5c3ced8"
+}
