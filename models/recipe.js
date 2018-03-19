@@ -2,8 +2,9 @@ const mongoose = require('mongoose')
 
 const recipeSchema = new mongoose.Schema({
   title: String,
-  author: String,
-  url: String,
+  ingredients: [],
+  instructions: String,
+  tags: [String],
   likes: Number,
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 })
