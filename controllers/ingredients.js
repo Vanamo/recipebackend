@@ -6,6 +6,22 @@ ingredientsRouter.get('/', async (request, response) => {
   response.json(ingredients.map(Ingredient.format))
 })
 
+ingredientsRouter.get('/:id', async (request, response) => {
+  try {
+    const ingredient = await Ingredient
+      .findById(request.params.id)
+
+    if (ingredient) {
+      response.json(Ingredient.format(ingredient))
+    } else {
+      response.status(404).end
+    }
+  } catch (exception) {
+    console.log(exception)
+    response.status(400).send({ error: 'malformatted id' })
+  }
+})
+
 ingredientsRouter.post('/', async (request, response) => {
   try {
     const body = request.body
