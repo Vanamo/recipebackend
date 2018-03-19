@@ -9,6 +9,8 @@ const recipesRouter = require('./controllers/recipes')
 const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
 const ingredientsRouter = require('./controllers/ingredients')
+const ingredientUnitsRouter = require('./controllers/ingredientUnits')
+const tagsRouter = require('./controllers/tags')
 const middleware = require('./utils/middleware')
 
 mongoose.connect(config.mongoUrl)
@@ -21,6 +23,8 @@ app.use('/api/recipes', recipesRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 app.use('/api/ingredients', ingredientsRouter)
+app.use('/api/ingredientUnits', ingredientUnitsRouter)
+app.use('/api/tags', tagsRouter)
 
 const server = http.createServer(app)
 
