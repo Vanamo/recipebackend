@@ -1,13 +1,17 @@
 const recipesRouter = require('express').Router()
 const Recipe = require('../models/recipe')
 const User = require('../models/user')
+const Ingredient = require('../models/ingredient')
+const Tag = require('../models/tag')
 const jwt = require('jsonwebtoken')
 
 
 recipesRouter.get('/', async (request, response) => {
   const recipes = await Recipe
     .find({})
-    .populate('user', { username: 1, name: 1 })
+    .populate({ path: 'user', model: 'User' })
+    .populate({ path: 'tags', model: 'Tag' })
+    
   response.json(recipes.map(Recipe.format))
 })
 
@@ -15,7 +19,8 @@ recipesRouter.get('/:id', async (request, response) => {
   try {
     const recipe = await Recipe
       .findById(request.params.id)
-      .populate('user', { username: 1, name: 1 })
+      .populate({ path: 'user', model: 'User' })
+      .populate({ path: 'tags', model: 'Tag' })
 
     if (recipe) {
       response.json(Recipe.format(recipe))

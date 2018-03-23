@@ -2,7 +2,10 @@ const ingredientsRouter = require('express').Router()
 const Ingredient = require('../models/ingredient')
 
 ingredientsRouter.get('/', async (request, response) => {
-  const ingredients = await Ingredient.find({})
+  const ingredients = await Ingredient
+    .find({})
+    .populate('unit', { name: 1 })
+    .populate('name', { name: 1 })
   response.json(ingredients.map(Ingredient.format))
 })
 
@@ -10,6 +13,8 @@ ingredientsRouter.get('/:id', async (request, response) => {
   try {
     const ingredient = await Ingredient
       .findById(request.params.id)
+      .populate('unit', { name: 1 })
+      .populate('name', { name: 1 })
 
     if (ingredient) {
       response.json(Ingredient.format(ingredient))
@@ -26,12 +31,9 @@ ingredientsRouter.post('/', async (request, response) => {
   try {
     const body = request.body
 
-    const existingIngredient = await Ingredient.find({ name: body.name })
-    if (existingIngredient.length > 0) {
-      return response.status(400).json({ error: 'the ingredient already exists' })
-    }
-
     const ingredient = new Ingredient({
+      quantity: body.quantity,
+      unit: body.unit,
       name: body.name
     })
 

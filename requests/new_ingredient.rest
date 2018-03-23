@@ -2,5 +2,7 @@ POST http://localhost:3001/api/ingredients
 content-type: application/json
 
 {
-  "name": "perunoita"
+  "quantity": 1,
+  "unit": "5aafa83b525a8930ccc496b4",
+  "name": "5ab4ff431acb70799886f0ea"
 }
