@@ -37,6 +37,16 @@ ingredientsRouter.post('/', async (request, response) => {
       name: body.name
     })
 
+    // const existingIngredient = await Ingredient
+    //   .find(ei =>
+    //     ei.quantity === body.quantity &&
+    //     ei.unit._id === body.unit &&
+    //     ei.name._id === body.name
+    //   )
+    // console.log('exists', existingIngredient)
+    // if (existingIngredient.length > 0) {
+    //   return response.json(Ingredient.format(existingIngredient))
+    // }
     const savedIngredient = await ingredient.save()
     response.status(201).json(Ingredient.format(savedIngredient))
   } catch (excepion) {
