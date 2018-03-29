@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
 
 userSchema.statics.format = (user) => {
   return {
-    id: user.id,
+    id: user._id,
     username: user.username,
     name: user.name,
     recipes: user.recipes.map(Recipe.format),

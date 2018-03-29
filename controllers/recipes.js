@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken')
 recipesRouter.get('/', async (request, response) => {
   const recipes = await Recipe
     .find({})
-    .populate({ path: 'user', model: 'User' })
+    .populate({ path: 'user', select: '_id username' })
     .populate({ path: 'tags', model: 'Tag' })
     
   response.json(recipes.map(Recipe.format))

@@ -4,16 +4,23 @@ const Recipe = require('../models/recipe')
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 
+recipeNotesRouter.get('/', async (request, response) => {
+  const recipeNotes = await RecipeNote
+    .find({})
+
+  response.json(recipeNotes.map(RecipeNote.format))
+})
+
 recipeNotesRouter.get('/:recipeid/:userid', async (request, response) => {
   try {
-    const recipeNote = await RecipeNote
+    const recipeNotes = await RecipeNote
       .find({
         recipeid: request.params.recipeid,
         userid: request.params.userid
       })
 
-    if (recipeNote) {
-      response.json(RecipeNote.format(recipeNote))
+    if (recipeNotes) {
+      response.json(recipeNotes.map(RecipeNote.format))
     } else {
       response.status(404).end()
     }
@@ -34,12 +41,11 @@ recipeNotesRouter.post('/', async (request, response) => {
     }
 
     const user = await User.findById(decodedToken.id)
-    const recipe = await Recipe.findById(body.recipeid)
 
     const recipeNote = new RecipeNote({
       content: body.content,
-      user: user._id,
-      recipe: body.recipeid
+      userid: user._id,
+      recipeid: body.recipeid
     })
 
     const savedRecipeNote = await recipeNote.save()

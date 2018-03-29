@@ -1,0 +1,8 @@
+POST http://localhost:3001/api/recipeNotes
+content-type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZzZXBwYW5lIiwiaWQiOiI1YWE3YzZlZTk0MzE0NTA3ZDVjM2NlZDgiLCJpYXQiOjE1MjIzMTM3NzR9.oaiLJBuBRh3lrYSd4_M62JCFtzMLcDpvX2XoKyX6j7Y
+
+{
+    "content": "Uusi muistiinpano",
+    "recipeid": "5abca18d9e05f7476556a50c"
+}
