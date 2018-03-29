@@ -92,9 +92,9 @@ recipeNotesRouter.put('/:recipeid/:userid', async (request, response) => {
     const recipeNote = {
       content: body.content
     }
-
+    console.log('id', request.body.id)
     const updatedRecipeNote = await RecipeNote
-      .findByIdAndUpdate(request.params.id, recipeNote, { new: true })
+      .findByIdAndUpdate(request.body.id, recipeNote, { new: true })
 
     response.status(200).json(RecipeNote.format(updatedRecipeNote))
   } catch (exception) {
