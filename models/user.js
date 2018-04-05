@@ -14,8 +14,8 @@ userSchema.statics.format = (user) => {
     id: user._id,
     username: user.username,
     name: user.name,
-    recipes: user.recipes.map(Recipe.format),
-    likedRecipes: user.likedRecipes.map(Recipe.format)
+    recipes: user.recipes.map(r => r._id),
+    likedRecipes: user.likedRecipes.map(r => r._id)
   }
 }
 
