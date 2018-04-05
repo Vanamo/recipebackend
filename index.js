@@ -13,6 +13,7 @@ const ingredientUnitsRouter = require('./controllers/ingredientUnits')
 const ingredientNamesRouter = require('./controllers/ingredientNames')
 const tagsRouter = require('./controllers/tags')
 const recipeNotesRouter = require('./controllers/recipeNotes')
+const likesRouter = require('./controllers/likes')
 const middleware = require('./utils/middleware')
 
 mongoose.connect(config.mongoUrl)
@@ -29,6 +30,7 @@ app.use('/api/ingredientUnits', ingredientUnitsRouter)
 app.use('/api/ingredientNames', ingredientNamesRouter)
 app.use('/api/tags', tagsRouter)
 app.use('/api/recipeNotes', recipeNotesRouter)
+app.use('/api/likes', likesRouter)
 
 const server = http.createServer(app)
 

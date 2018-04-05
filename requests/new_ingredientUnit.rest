@@ -2,5 +2,5 @@ POST http://localhost:3001/api/ingredientUnits
 content-type: application/json
 
 {
-  "name": "rkl"
+  "name": " "
 }

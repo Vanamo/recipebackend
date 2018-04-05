@@ -30,27 +30,18 @@ ingredientsRouter.get('/:id', async (request, response) => {
 ingredientsRouter.post('/', async (request, response) => {
   try {
     const body = request.body
+    console.log('body', body)
 
     const ingredient = new Ingredient({
-      quantity: body.quantity,
-      unit: body.unit,
+      quantity: body.quantity || 0,
+      unit: body.unit || '5ac60ac1f56d5b480bc211f4',  //tyhjän unitin id mlabissa
       name: body.name
     })
 
-    // const existingIngredient = await Ingredient
-    //   .find(ei =>
-    //     ei.quantity === body.quantity &&
-    //     ei.unit._id === body.unit &&
-    //     ei.name._id === body.name
-    //   )
-    // console.log('exists', existingIngredient)
-    // if (existingIngredient.length > 0) {
-    //   return response.json(Ingredient.format(existingIngredient))
-    // }
     const savedIngredient = await ingredient.save()
     response.status(201).json(Ingredient.format(savedIngredient))
   } catch (excepion) {
-    console.log(exception)
+    console.log('abc',exception)
     response.status(500).json({ error: 'something went wrong' })
   }
 })
