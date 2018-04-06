@@ -19,7 +19,7 @@ recipesRouter.get('/:id', async (request, response) => {
   try {
     const recipe = await Recipe
       .findById(request.params.id)
-      .populate({ path: 'user', model: 'User' })
+      .populate({ path: 'user', model: '_id username' })
       .populate({ path: 'tags', model: 'Tag' })
 
     if (recipe) {

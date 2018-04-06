@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken')
 likesRouter.get('/', async (request, response) => {
   const likes = await Like.find({})
 
-  response.json(likes.map(l => l.recipeid))
+  response.json(likes)
 })
 
 likesRouter.get('/:recipeid/:userid', async (request, response) => {
@@ -19,7 +19,7 @@ likesRouter.get('/:recipeid/:userid', async (request, response) => {
       })
 
     if (likes) {
-      response.json(likes[0].recipeid) //only one like per user      
+      response.json(likes[0]) //only one like per user      
     } else {
       response.status(404).end()
     }
@@ -67,10 +67,9 @@ likesRouter.post('/', async (request, response) => {
 likesRouter.delete('/:recipeid/:userid', async (request, response) => {
   try {
     const decodedToken = jwt.verify(request.token, process.env.SECRET)
-    const like = await Like.findById(request.params.id)
 
     let authorizedUser = false
-    if (decodedToken.id.toString() === like.user.toString()) {
+    if (decodedToken.id.toString() === request.params.userid.toString()) {
       authorizedUser = true
     }
 
@@ -78,7 +77,21 @@ likesRouter.delete('/:recipeid/:userid', async (request, response) => {
       return response.status(401).json({ error: 'token missing or invalid' })
     }
 
-    await Like.findByIdAndRemove(request.params.id)
+    const likes = await Like
+    .find({
+      recipeid: request.params.recipeid,
+      userid: request.params.userid
+    })
+
+    const like = likes[0]
+    const recipe = await Recipe.findById(request.params.recipeid)
+
+    console.log('like', like)
+    await Like.findByIdAndRemove(like._id)
+
+    console.log('recipe', recipe)
+    recipe.likedUsers = recipe.likedUsers.filter(lu => lu !== request.params.userid)
+    await recipe.save()
 
     response.status(204).end()
   } catch (exception) {
