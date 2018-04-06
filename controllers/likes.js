@@ -19,7 +19,7 @@ likesRouter.get('/:recipeid/:userid', async (request, response) => {
       })
 
     if (likes) {
-      response.json(likes.map(l => l._id))
+      response.json(likes[0].recipeid) //only one like per user      
     } else {
       response.status(404).end()
     }
@@ -40,14 +40,18 @@ likesRouter.post('/', async (request, response) => {
     }
 
     const user = await User.findById(decodedToken.id)
+    const recipe = await Recipe.findById(body.recipeid)
 
-    console.log('like', body, user)
     const like = new Like({
       userid: user._id,
       recipeid: body.recipeid
     })
 
     const savedLike = await like.save()
+
+    recipe.likedUsers = recipe.likedUsers.concat(savedLike.userid)
+    await recipe.save()
+    console.log('recipe', recipe)
 
     response.status(201).json(like)
   } catch (exception) {
@@ -69,7 +73,7 @@ likesRouter.delete('/:recipeid/:userid', async (request, response) => {
     if (decodedToken.id.toString() === like.user.toString()) {
       authorizedUser = true
     }
-    console.log('user', authorizedUser)
+
     if (!request.token || !authorizedUser) {
       return response.status(401).json({ error: 'token missing or invalid' })
     }

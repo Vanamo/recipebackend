@@ -5,7 +5,7 @@ const recipeSchema = new mongoose.Schema({
   ingredients: [],
   instructions: String,
   tags: [String],
-  likes: Number,
+  likedUsers: [String],
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 })
 
@@ -16,7 +16,7 @@ recipeSchema.statics.format = (recipe) => {
     ingredients: recipe.ingredients,
     instructions: recipe.instructions,
     tags: recipe.tags,
-    likes: recipe.likes,
+    likedUsers: recipe.likedUsers,
     user: recipe.user
   }
 }

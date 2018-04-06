@@ -43,17 +43,13 @@ recipesRouter.post('/', async (request, response) => {
       return response.status(401).json({ error: 'token missing or invalid' })
     }
 
-    if (!body.title || !body.ingredients) {
+    if (!body.title) {
       return response.status(400).json({ error: 'content missing' })
     }
 
     const existingTitle = await Recipe.find({ title: body.title })
     if (existingTitle.length > 0) {
-      return response.status(400).json({ error: "title must be unique" })
-    }
-
-    if (!body.likes) {
-      body.likes = 0
+      return response.status(400).json({ error: 'title must be unique' })
     }
 
     const user = await User.findById(decodedToken.id)
@@ -63,7 +59,7 @@ recipesRouter.post('/', async (request, response) => {
       ingredients: body.ingredients,
       instructions: body.instructions,
       tags: body.tags,
-      likes: body.likes,
+      likedUsers: [],
       user: user._id
     })
 
@@ -116,7 +112,7 @@ recipesRouter.put('/:id', async (request, response) => {
       ingredients: body.ingredients,
       instructions: body.instructions,
       tags: body.tags,
-      likes: body.likes
+      likedUsers: body.likedUsers
     }
 
     console.log('id: ', request.params.id)
