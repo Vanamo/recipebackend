@@ -64,19 +64,24 @@ recipeNotesRouter.post('/', async (request, response) => {
 recipeNotesRouter.delete('/:recipeid/:userid', async (request, response) => {
   try {
     const decodedToken = jwt.verify(request.token, process.env.SECRET)
-    const recipeNote = await RecipeNote.findById(request.params.id)
 
     let authorizedUser = false
-    if (!recipeNote.user ||
-      decodedToken.id.toString() === recipeNote.user.toString()) {
+    if (decodedToken.id.toString() === request.params.userid.toString()) {
       authorizedUser = true
     }
-    console.log('user', authorizedUser)
+
     if (!request.token || !authorizedUser) {
       return response.status(401).json({ error: 'token missing or invalid' })
     }
 
-    await RecipeNote.findByIdAndRemove(request.params.id)
+    const recipeNotes = await RecipeNote
+      .find({
+        recipeid: request.params.recipeid,
+        userid: request.params.userid
+      })
+
+    const recipeNote = recipeNotes[0]
+    await RecipeNote.findByIdAndRemove(recipeNote._id)
 
     response.status(204).end()
   } catch (exception) {

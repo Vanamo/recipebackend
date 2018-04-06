@@ -78,10 +78,10 @@ likesRouter.delete('/:recipeid/:userid', async (request, response) => {
     }
 
     const likes = await Like
-    .find({
-      recipeid: request.params.recipeid,
-      userid: request.params.userid
-    })
+      .find({
+        recipeid: request.params.recipeid,
+        userid: request.params.userid
+      })
 
     const like = likes[0]
     const recipe = await Recipe.findById(request.params.recipeid)
