@@ -17,9 +17,10 @@ recipesRouter.get('/', async (request, response) => {
 
 recipesRouter.get('/:id', async (request, response) => {
   try {
+    console.log('id', request.params.id)
     const recipe = await Recipe
       .findById(request.params.id)
-      .populate({ path: 'user', model: '_id username' })
+      .populate({ path: 'user', select: '_id username' })
       .populate({ path: 'tags', model: 'Tag' })
 
     if (recipe) {
@@ -107,6 +108,7 @@ recipesRouter.put('/:id', async (request, response) => {
   try {
     const body = request.body
 
+    console.log('body', body)
     const recipe = {
       title: body.title,
       ingredients: body.ingredients,
