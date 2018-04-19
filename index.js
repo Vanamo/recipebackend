@@ -22,6 +22,7 @@ mongoose.Promise = global.Promise
 app.use(cors())
 app.use(bodyParser.json())
 app.use(middleware.tokenExtractor)
+app.use(express.static('build'))
 app.use('/api/recipes', recipesRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
