@@ -10,8 +10,9 @@ recipesRouter.get('/', async (request, response) => {
   const recipes = await Recipe
     .find({})
     .populate({ path: 'user', select: '_id username' })
-    .populate({ path: 'tags', model: 'Tag' })
+    .populate({ path: 'tags', select: '_id name' })
     
+  console.log('recipes', recipes)
   response.json(recipes.map(Recipe.format))
 })
 
@@ -21,7 +22,7 @@ recipesRouter.get('/:id', async (request, response) => {
     const recipe = await Recipe
       .findById(request.params.id)
       .populate({ path: 'user', select: '_id username' })
-      .populate({ path: 'tags', model: 'Tag' })
+      .populate({ path: 'tags', select: '_id name' })
 
     if (recipe) {
       response.json(Recipe.format(recipe))
