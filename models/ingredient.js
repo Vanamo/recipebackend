@@ -3,7 +3,9 @@ const mongoose = require('mongoose')
 const ingredientSchema = mongoose.Schema({
   quantity: Number,
   unit: { type: mongoose.Schema.Types.ObjectId, ref: 'IngredientUnit' },
-  name: { type: mongoose.Schema.Types.ObjectId, ref: 'IngredientName' }
+  name: { type: mongoose.Schema.Types.ObjectId, ref: 'IngredientName' },
+  subheading: String,
+  type: String
 })
 
 ingredientSchema.statics.format = (ingredient) => {
@@ -11,7 +13,9 @@ ingredientSchema.statics.format = (ingredient) => {
     id: ingredient._id,
     quantity: ingredient.quantity,
     unit: ingredient.unit,
-    name: ingredient.name
+    name: ingredient.name,
+    subheading: ingredient.subheading,
+    type: ingredient.type
   }
 }
 
