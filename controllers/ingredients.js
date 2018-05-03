@@ -34,7 +34,7 @@ ingredientsRouter.post('/', async (request, response) => {
 
     const ingredient = new Ingredient({
       quantity: body.quantity || 0,
-      unit: body.unit || '5ae1dff6ea7268176b261cb3',   //tyhjän unitin id mlabissa '5ac60ac1f56d5b480bc211f4'
+      unit: body.unit || '5ae1dff6ea7268176b261cb3',   //tyhjän unitin id mlabissa
       name: body.name || '5ae1e046ea7268176b261cb4',  //tyhjän namen id mlabissa
       subheading: body.subheading,
       type: body.type
