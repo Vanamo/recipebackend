@@ -19,8 +19,10 @@ recipeEmphasesRouter.get('/:recipeid/:userid', async (request, response) => {
         userid: request.params.userid
       })
 
-    if (recipeEmphases) {
-      response.json(recipeEmphases.map(RecipeEmphasis.format))
+    const recipeEmphasis = recipeEmphases[0] //Only one emphasis per recipe per user
+
+    if (recipeEmphasis) {
+      response.json(RecipeEmphasis.format(recipeEmphasis)) 
     } else {
       response.status(404).end()
     }
