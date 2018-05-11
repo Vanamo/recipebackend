@@ -2,7 +2,7 @@ POST http://localhost:3001/api/users
 content-type: application/json
 
 {
-  "username": "vseppane",
-  "name": "Vanamo Piirainen",
+  "username": "Esko",
+  "name": "Esko Piirainen",
   "password": "salasana"
 }

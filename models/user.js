@@ -6,7 +6,8 @@ const userSchema = new mongoose.Schema({
   name: String,
   passwordHash: String,
   recipes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Recipe' }],
-  likedRecipes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Recipe' }]
+  likedRecipes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Recipe' }],
+  drawnRecipes: [String]
 })
 
 userSchema.statics.format = (user) => {
@@ -15,7 +16,8 @@ userSchema.statics.format = (user) => {
     username: user.username,
     name: user.name,
     recipes: user.recipes.map(r => r._id),
-    likedRecipes: user.likedRecipes.map(lr => lr._id)
+    likedRecipes: user.likedRecipes.map(lr => lr._id),
+    drawnRecipes: user.drawnRecipes
   }
 }
 
