@@ -45,4 +45,27 @@ usersRouter.post('/', async (request, response) => {
   }
 })
 
+
+usersRouter.put('/:userid', async (request, response) => {
+  try {
+    const body = request.body
+
+    const user = {
+      username: body.username,
+      name: body.name,
+      recipes: body.recipes,
+      likedRecipes: body.likedRecipes,
+      drawnRecipes: body.drawnRecipes
+    }
+    console.log('id', request.body.id)
+    const updatedUser = await User
+      .findByIdAndUpdate(request.body.id, user, { new: true })
+
+    response.status(200).json(User.format(updatedUser))
+  } catch (exception) {
+    console.log(exception)
+    response.status(400).send({ error: 'malformatted id' })
+  }
+})
+
 module.exports = usersRouter
