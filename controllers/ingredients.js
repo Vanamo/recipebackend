@@ -30,7 +30,6 @@ ingredientsRouter.get('/:id', async (request, response) => {
 ingredientsRouter.post('/', async (request, response) => {
   try {
     const body = request.body
-    console.log('body', body)
 
     const ingredient = new Ingredient({
       quantity: body.quantity || 0,
@@ -43,7 +42,7 @@ ingredientsRouter.post('/', async (request, response) => {
     const savedIngredient = await ingredient.save()
     response.status(201).json(Ingredient.format(savedIngredient))
   } catch (excepion) {
-    console.log('abc',exception)
+    console.log(exception)
     response.status(500).json({ error: 'something went wrong' })
   }
 })

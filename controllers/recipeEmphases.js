@@ -99,7 +99,6 @@ recipeEmphasesRouter.put('/:recipeid/:userid', async (request, response) => {
     const recipeEmphasis = {
       content: body.content
     }
-    console.log('id', request.body.id)
     const updatedRecipeEmphasis = await RecipeEmphasis
       .findByIdAndUpdate(request.body.id, recipeEmphasis, { new: true })
 

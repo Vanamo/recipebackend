@@ -55,7 +55,6 @@ usersRouter.put('/:userid', async (request, response) => {
       likedRecipes: body.likedRecipes,
       drawnRecipes: body.drawnRecipes
     }
-    console.log('id', request.body.id)
     const updatedUser = await User
       .findByIdAndUpdate(request.body.id, user, { new: true })
 

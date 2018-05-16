@@ -53,7 +53,6 @@ likesRouter.post('/', async (request, response) => {
     await recipe.save()
     user.likedRecipes = user.likedRecipes.concat(savedLike.recipeid)
     await user.save()
-    console.log('recipe', recipe)
 
     response.status(201).json(like)
   } catch (exception) {
@@ -89,10 +88,8 @@ likesRouter.delete('/:recipeid/:userid', async (request, response) => {
     const recipe = await Recipe.findById(request.params.recipeid)
     const user = await User.findById(request.params.userid)
 
-    console.log('like', like)
     await Like.findByIdAndRemove(like._id)
 
-    console.log('recipe', recipe)
     recipe.likedUsers = recipe.likedUsers.filter(lu => lu !== request.params.userid)
     await recipe.save()
     user.likedRecipes = user.likedRecipes.filter(lr => lr !== request.params.recipeid)

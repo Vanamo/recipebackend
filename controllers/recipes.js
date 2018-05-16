@@ -12,13 +12,11 @@ recipesRouter.get('/', async (request, response) => {
     .populate({ path: 'user', select: '_id username' })
     .populate({ path: 'tags', select: '_id name' })
     
-  console.log('recipes', recipes)
   response.json(recipes.map(Recipe.format))
 })
 
 recipesRouter.get('/:id', async (request, response) => {
   try {
-    console.log('id', request.params.id)
     const recipe = await Recipe
       .findById(request.params.id)
       .populate({ path: 'user', select: '_id username' })
@@ -91,7 +89,6 @@ recipesRouter.delete('/:id', async (request, response) => {
       decodedToken.id.toString() === recipe.user.toString()) {
       authorizedUser = true
     }
-    console.log('user', authorizedUser)
     if (!request.token || !authorizedUser) {
       return response.status(401).json({ error: 'token missing or invalid' })
     }
@@ -109,7 +106,6 @@ recipesRouter.put('/:id', async (request, response) => {
   try {
     const body = request.body
 
-    console.log('body', body)
     const recipe = {
       title: body.title,
       ingredients: body.ingredients,
@@ -118,7 +114,6 @@ recipesRouter.put('/:id', async (request, response) => {
       likedUsers: body.likedUsers
     }
 
-    console.log('id: ', request.params.id)
     const updatedRecipe = await Recipe.findByIdAndUpdate(request.params.id, recipe, { new: true })
 
     response.status(200).json(Recipe.format(updatedRecipe))

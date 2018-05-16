@@ -97,7 +97,6 @@ recipeNotesRouter.put('/:recipeid/:userid', async (request, response) => {
     const recipeNote = {
       content: body.content
     }
-    console.log('id', request.body.id)
     const updatedRecipeNote = await RecipeNote
       .findByIdAndUpdate(request.body.id, recipeNote, { new: true })
 
